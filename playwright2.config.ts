@@ -36,9 +36,7 @@ export default defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
-    launchOptions: {
-      args: ['--lang=en-US'], // Switch PW browser to EN
-    },
+    
   },
 
   /* Configure projects for major browsers */
