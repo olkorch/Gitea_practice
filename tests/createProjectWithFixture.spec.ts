@@ -1,5 +1,5 @@
-import { test, expect } from '@playwright/test'
-import CreateProject from '../pom/CreateProject'
+import { test } from '../fixtures/createProjectPageFixture' 
+import { expect } from '@playwright/test'       
 import SignInPage from '../pom/SignInPage'
 import { users } from '../test-data/testUsers'
 import Projects from '../pom/Projects'
@@ -9,21 +9,17 @@ import Projects from '../pom/Projects'
 test.describe(('Create project tests'), () => {
 
     let signInPage: SignInPage
-    let createProject: CreateProject
     let projects: Projects
-    test.use({ storageState: 'testUser1-state.json'})
+    
         test.beforeEach(async ({ page }) => {
             signInPage = new SignInPage(page)
-            createProject = new CreateProject(page)
             projects = new Projects(page)
     
-            // await signInPage.openPage()
-            // await signInPage.signInWithCredentials(users.testUser1.userName, users.testUser1.password)
-            await createProject.openPage()
+        
     
     })
 
-    test('New project only with title', async ({page }) => {
+    test('New project only with title', async ({createProject, page }) => {
         await createProject.enterTitle('TitleOnly')
         await createProject.clickCreateProject()
         await expect(page.locator('div.ui.positive.message.flash-message.flash-success')).toHaveText('The project "TitleOnly" has been created.')
@@ -31,7 +27,7 @@ test.describe(('Create project tests'), () => {
         await projects.confirmDeletion()
     })
 
-    test('New project with template None', async ({ page }) => {
+    test('New project with template None', async ({createProject, page }) => {
         await createProject.enterTitle('TemplateNone')
         await createProject.selectTemplateNone()
         await createProject.clickCreateProject()
@@ -41,7 +37,7 @@ test.describe(('Create project tests'), () => {
         
     })
 
-    test('New project with description', async ({ page }) => {
+    test('New project with description', async ({createProject, page }) => {
         await createProject.enterTitle('ProjectWithDescription')
         await createProject.enterDescription('DescriptionText')
         await createProject.clickCreateProject()
@@ -54,7 +50,7 @@ test.describe(('Create project tests'), () => {
     })
 
 
-    test('New project with template Kanban', async ({ page }) => {
+    test('New project with template Kanban', async ({createProject, page }) => {
         await createProject.enterTitle('TemplateKanban')
         await createProject.selectTemplateKanban()
         await createProject.clickCreateProject()
@@ -65,7 +61,7 @@ test.describe(('Create project tests'), () => {
         await projects.confirmDeletion()
     })
 
-    test('New project with template BugTriage', async ({ page }) => {
+    test('New project with template BugTriage', async ({createProject, page }) => {
         await createProject.enterTitle('TemplateBugTriage')
         await createProject.selectTemplateBugTriage()
         await createProject.clickCreateProject()
@@ -77,7 +73,7 @@ test.describe(('Create project tests'), () => {
     })
 
     
-    test('Cancel Project Creation', async ({ page }) => {
+    test('Cancel Project Creation', async ({createProject, page }) => {
         await createProject.clickCancelButton()
         await expect(page).toHaveURL(`/${users.testUser1.userName}/-/projects`)
     })
