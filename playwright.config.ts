@@ -46,14 +46,22 @@ export default defineConfig({
     {
       name: 'setup',
       use: { ...devices['Desktop Chrome'] },
-      testMatch: '*setup/*.ts'
+      testMatch: ['setup/*.ts'],
     },
-  
+    {
+      name: 'apiSetup',
+      testMatch: ['apiSetup/*.ts'],
+    },
+    {
+      name: 'api',
+      testMatch: ['api/*.ts'],
+      dependencies: ['apiSetup'],
+    },
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
-      testIgnore: '*setup/*.ts',
-      dependencies: ['setup']
+      testMatch: ['ui/*.ts'],
+      dependencies: ['setup'],
     },
 
     // {

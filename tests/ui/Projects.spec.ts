@@ -1,54 +1,61 @@
-import { expect } from '@playwright/test'
-import { test } from '../fixtures/createProjectsFixture' 
-import SignInPage from '../pom/SignInPage'
-import { users } from '../test-data/testUsers'
-import Projects from '../pom/Projects'
+import { test, expect } from '@playwright/test'
+import CreateProject from '../../pom/CreateProject'
+import SignInPage from '../../pom/SignInPage'
+import { users } from '../../test-data/testUsers'
+import Projects from '../../pom/Projects'
 
 
 test.describe(('Projects tests'), () => {
 
-    let signInPage: SignInPage    
+    let signInPage: SignInPage
+    let createProject: CreateProject
     let projects: Projects
-
-    
+    test.use({ storageState: 'testUser1-state.json'})
         test.beforeEach(async ({ page }) => {
             signInPage = new SignInPage(page)
-            projects = new Projects(page)   
-          
+            createProject = new CreateProject(page)
+            projects = new Projects(page)
+    
+            // await signInPage.openPage()
+            // await signInPage.signInWithCredentials(users.testUser1.userName, users.testUser1.password)
+            await createProject.openPage()
+
+            await createProject.enterTitle('TitleText')
+            await createProject.clickCreateProject()
     
         })
     
-    test('New Project', async ({createProjects, page }) => {
+    test('New Project', async ({ page }) => {
         await projects.newProject()
         await expect(page).toHaveURL(`/${users.testUser1.userName}/-/projects/new`)
-        await createProjects.clickCancelButton()
+        await createProject.clickCancelButton()
         await projects.deleteProject()
         await projects.confirmDeletion()
        
     })
 
-    test('Delete project', async ({createProjects, page }) => {
+    test('Delete project', async ({ page }) => {
         await projects.deleteProject()
         await projects.confirmDeletion()
         await expect (page.locator('div.ui.positive.message.flash-message.flash-success')).toHaveText('The project has been deleted.')
     })
 
-    test('Edit project', async ({createProjects, page }) => {
+    test('Edit project', async ({ page }) => {
         await projects.editProject()
         await expect(page.locator('h2:has-text("Edit Project")')).toBeVisible()
-        await createProjects.clickCancelButton()
+        await createProject.clickCancelButton()
         await page.locator('button.item.btn.delete-button').click()
         await projects.confirmDeletion()
     })
 
-    test('Close project', async ({createProjects, page }) => {
+    test('Close project', async ({ page }) => {
         await projects.closeProject()
         await expect(page.locator('button.item.btn.link-action > svg.svg.octicon-check')).toBeVisible()
         await page.locator('button.item.btn.delete-button').click()
         await projects.confirmDeletion()
     })
 
-    test('Closed projects tab', async ({createProjects, page }) => {
+    test('Closed projects tab', async ({ page }) => {
         await projects.closeProject()
         await expect(page.locator('button.item.btn.link-action > svg.svg.octicon-check')).toBeVisible()
         await projects.openPage()
@@ -59,10 +66,10 @@ test.describe(('Projects tests'), () => {
     })
 
 
-    test('Search project', async ({createProjects, page }) => {
-        await createProjects.openPage()
-        await createProjects.enterTitle('NewText')
-        await createProjects.clickCreateProject()
+    test('Search project', async ({ page }) => {
+        await createProject.openPage()
+        await createProject.enterTitle('NewText')
+        await createProject.clickCreateProject()
         await projects.fillSearchField('NewText')
         await projects.clickSearchButton()
         await expect(page.locator('a:has-text("TitleText")')).not.toBeVisible()

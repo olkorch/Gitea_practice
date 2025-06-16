@@ -1,8 +1,8 @@
-import { test } from '../fixtures/createProjectPageFixture' 
+import { test } from '../../fixtures/createProjectPageFixture' 
 import { expect } from '@playwright/test'       
-import SignInPage from '../pom/SignInPage'
-import { users } from '../test-data/testUsers'
-import Projects from '../pom/Projects'
+import SignInPage from '../../pom/SignInPage'
+import { users } from '../../test-data/testUsers'
+import Projects from '../../pom/Projects'
 
 
 

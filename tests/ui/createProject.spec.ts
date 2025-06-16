@@ -1,8 +1,8 @@
 import { test, expect } from '@playwright/test'
-import CreateProject from '../pom/CreateProject'
-import SignInPage from '../pom/SignInPage'
-import { users } from '../test-data/testUsers'
-import Projects from '../pom/Projects'
+import CreateProject from '../../pom/CreateProject'
+import SignInPage from '../../pom/SignInPage'
+import { users } from '../../test-data/testUsers'
+import Projects from '../../pom/Projects'
 
 
 
