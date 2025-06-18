@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 import { users } from '../../test-data/testUsers'
-import OrgService from '../../service controller/OrgService'
+import OrgService from '../../service-controller/orgService'
 
 //use without apiSetup
 test.describe(('Create org endpoint tests'), () => {
