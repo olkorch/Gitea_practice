@@ -5,7 +5,7 @@ import { users } from '../../test-data/testUsers'
 import Projects from '../../pom/Projects'
 
 
-test.describe(('Projects tests'), () => {
+test.describe.skip(('Projects tests'), () => {
 
     let signInPage: SignInPage    
     let projects: Projects

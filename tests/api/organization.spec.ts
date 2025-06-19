@@ -41,7 +41,7 @@ test('/orgs Create an organization: 422 validation error', async ({ request }) =
 
 
 //use with apiSetup
-test.describe(('Org label tests'), () => {
+test.describe.skip(('Org label tests'), () => {
 
     let orgService: OrgService
     

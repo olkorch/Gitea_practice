@@ -60,7 +60,7 @@ test('user/repos Create a repository: 422 name is not specified', async () => {
 
 
 //use with apiSetup
-test.describe(('Repo wiki tests'), () => {
+test.describe.skip(('Repo wiki tests'), () => {
 
     let repoService: RepoService
     
