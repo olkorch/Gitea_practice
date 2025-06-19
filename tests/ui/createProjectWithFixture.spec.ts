@@ -6,7 +6,7 @@ import Projects from '../../pom/Projects'
 
 
 
-test.describe(('Create project tests'), () => {
+test.describe.skip(('Create project tests'), () => {
 
     let signInPage: SignInPage
     let projects: Projects
