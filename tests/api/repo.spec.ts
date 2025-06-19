@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 import { users } from '../../test-data/testUsers'
-import RepoService from '../../service controller/repoService'
+import RepoService from '../../service-controller/repoService'
 
 
 

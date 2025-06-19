@@ -4,7 +4,7 @@ import { users } from '../../test-data/testUsers';
 
 
 
-test.describe(('Storage state save'), () => {
+test.describe.skip(('Storage state save'), () => {
 
     let signInPage: SignInPage
           

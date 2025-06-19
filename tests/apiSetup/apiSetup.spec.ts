@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test'
 import { users } from '../../test-data/testUsers'
-import OrgService from '../../service controller/OrgService'
-import RepoService from '../../service controller/repoService'
+import OrgService from '../../service-controller/orgService'
+import RepoService from '../../service-controller/repoService'
 
 
 
