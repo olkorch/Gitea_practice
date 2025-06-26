@@ -1,6 +1,10 @@
 import { expect, Locator } from "@playwright/test"
-import BasePage from "./BasePage"
-import { users } from '../test-data/testUsers'
+import BasePage from "../BasePage"
+import { getTestUsers } from '../../test-data/testUsers';
+
+
+const users = getTestUsers();
+const testUser1 = users.randomUser1; 
 
 export default class Projects extends BasePage {
     private readonly newProjectButton: Locator = this.page.locator('a.ui.small.primary.button')
@@ -14,7 +18,7 @@ export default class Projects extends BasePage {
     
    
     async openPage() {
-        await this.page.goto(`/${users.testUser1.userName}/-/projects`)
+        await this.page.goto(`/${testUser1.userName}/-/projects`)
         // await this.page.waitForLoadState('load')
 
     }

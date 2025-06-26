@@ -1,6 +1,6 @@
 
 import { test as base, Page } from '@playwright/test'
-import CreateProject from '../pom/CreateProject'
+import CreateProject from '../pom/pages/CreateProject'
 
 type Fixtures = {
     createProject: CreateProject
@@ -8,7 +8,7 @@ type Fixtures = {
 
 export const test = base.extend<Fixtures>({
     context: async ({ browser }, use) => {
-        const context = await browser.newContext({ storageState: 'testUser1-state.json' });
+        const context = await browser.newContext({ storageState: 'test-data/states/testUser1-state.json' });
         await use(context)
         await context.close()
        

@@ -23,7 +23,7 @@ export default class RepoService {
     }
 
     async deleteRepo(token: string, repo: string, owner: string) {
-        return await this.request.delete(`http://localhost:3000/api/v1/repos/${owner}/${repo}`, {
+        return await this.request.delete(`/api/v1/repos/${owner}/${repo}`, {
             headers: {
                 'Authorization': `token ${token}`
             }
@@ -31,7 +31,7 @@ export default class RepoService {
     }
     
     async createWikiPage(token: string, repo: string, owner: string, title: string) {
-        return await this.request.post(`http://localhost:3000/api/v1/repos/${owner}/${repo}/wiki/new`, {
+        return await this.request.post(`/api/v1/repos/${owner}/${repo}/wiki/new`, {
             headers: {
                 'Authorization': `token ${token}`
             },
@@ -43,7 +43,7 @@ export default class RepoService {
     }
 
     async getWikiPage(token: string, repo: string, owner: string, pageName: string) {
-        return await this.request.get(`http://localhost:3000/api/v1/repos/${owner}/${repo}/wiki/page/${pageName}`, {
+        return await this.request.get(`/api/v1/repos/${owner}/${repo}/wiki/page/${pageName}`, {
             headers: {
                 'Authorization': `token ${token}`
             }
@@ -53,7 +53,7 @@ export default class RepoService {
     }
 
     async updateWikiPage(token: string, repo: string, owner: string, pageName: string, newPageName: string) {
-        return await this.request.patch(`http://localhost:3000/api/v1/repos/${owner}/${repo}/wiki/page/${pageName}`, {
+        return await this.request.patch(`/api/v1/repos/${owner}/${repo}/wiki/page/${pageName}`, {
             headers: {
                 'Authorization': `token ${token}`
             },
@@ -66,7 +66,7 @@ export default class RepoService {
     }
 
     async deleteWikiPage(token: string, repo: string, owner: string, pageName: string) {
-        return await this.request.delete(`http://localhost:3000/api/v1/repos/${owner}/${repo}/wiki/page/${pageName}`, {
+        return await this.request.delete(`/api/v1/repos/${owner}/${repo}/wiki/page/${pageName}`, {
             headers: {
                 'Authorization': `token ${token}`
             }

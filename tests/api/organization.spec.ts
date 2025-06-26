@@ -1,9 +1,13 @@
 import { test, expect } from '@playwright/test'
-import { users } from '../../test-data/testUsers'
+import { getTestUsers } from '../../test-data/testUsers';
 import OrgService from '../../service-controller/orgService'
 
+
+const users = getTestUsers();
+const testUser1 = users.randomUser1; 
+
 //use without apiSetup
-test.describe(('Create org endpoint tests'), () => {
+test.describe.skip(('Create org endpoint tests'), () => {
 
     let orgService: OrgService
     
@@ -14,12 +18,12 @@ test.describe(('Create org endpoint tests'), () => {
 
 
 test('/orgs Create an organization: 201 created', async () => {
-    const response = await orgService.createOrg(users.testUser1.apiKey, 'OrgName')
+    const response = await orgService.createOrg(testUser1.apiKey, 'OrgName')
 
     console.log(await response.status())
     expect(response.status()).toBe(201)
 
-    await orgService.deleteOrg(users.testUser1.apiKey, 'OrgName')
+    await orgService.deleteOrg(testUser1.apiKey, 'OrgName')
 })
 
 test('/orgs Create an organization: 401 unathorized', async () => {
@@ -30,7 +34,7 @@ test('/orgs Create an organization: 401 unathorized', async () => {
 })
 
 test('/orgs Create an organization: 422 validation error', async ({ request }) => {
-    const response = await orgService.createOrg(users.testUser1.apiKey, undefined)
+    const response = await orgService.createOrg(testUser1.apiKey, undefined)
 
     console.log(await response.status())
     expect(response.status()).toBe(422)
@@ -41,7 +45,7 @@ test('/orgs Create an organization: 422 validation error', async ({ request }) =
 
 
 //use with apiSetup
-test.describe.skip(('Org label tests'), () => {
+test.describe(('Org label tests'), () => {
 
     let orgService: OrgService
     
@@ -50,7 +54,7 @@ test.describe.skip(('Org label tests'), () => {
 
     //     orgService = new OrgService(request)
 
-    //     await orgService.createOrg(users.testUser1.apiKey, 'OrgName')
+    //     await orgService.createOrg(testUser1.apiKey, 'OrgName')
 
             
     // })
@@ -59,7 +63,7 @@ test.describe.skip(('Org label tests'), () => {
 
         orgService = new OrgService(request)
 
-        await orgService.deleteOrg(users.testUser1.apiKey, 'OrgName')
+        await orgService.deleteOrg(testUser1.apiKey, 'OrgName')
 
         
     
@@ -73,10 +77,11 @@ test.describe.skip(('Org label tests'), () => {
 
     test('/orgs/{org}/labels Create a label', async () => {
 
-        const response = await orgService.createLabel(users.testUser1.apiKey, 'OrgName', 'LabelName', '#00aabb')
+        const response = await orgService.createLabel(testUser1.apiKey, 'OrgName', 'LabelName', '#00aabb')
            
         const body = await response.json()    
         console.log(await response.status())
+        console.log(body)
         expect(response.status()).toBe(201)
         expect(body).toHaveProperty('name')
         expect(body).toHaveProperty('color')
@@ -87,12 +92,12 @@ test.describe.skip(('Org label tests'), () => {
 
     test('/orgs/{org}/labels/{id} Get a label', async () => {
 
-        const response = await orgService.createLabel(users.testUser1.apiKey, 'OrgName', 'LabelName', '#00aabb')       
+        const response = await orgService.createLabel(testUser1.apiKey, 'OrgName', 'LabelName', '#00aabb')       
         
         const bodyPost = await response.json()
         const id = bodyPost.id
 
-        const response1 = await orgService.getLabel(users.testUser1.apiKey, 'OrgName', id)
+        const response1 = await orgService.getLabel(testUser1.apiKey, 'OrgName', id)
                     
         const bodyGet = await response1.json()    
         console.log(await response1.status())
@@ -107,13 +112,14 @@ test.describe.skip(('Org label tests'), () => {
   
     test('/orgs/{org}/labels/{id} Delete a label', async () => {
 
-        const response = await orgService.createLabel(users.testUser1.apiKey, 'OrgName', 'LabelName', '#00aabb')       
+        const response = await orgService.createLabel(testUser1.apiKey, 'OrgName', 'LabelName', '#00aabb')       
         
         const bodyPost = await response.json()
         const id = bodyPost.id
         
-        const response1 = await orgService.deleteLabel(users.testUser1.apiKey, 'OrgName', id)           
+        const response1 = await orgService.deleteLabel(testUser1.apiKey, 'OrgName', id)           
             
+        
         console.log(await response1.status())
         expect(response1.status()).toBe(204)       
           
@@ -123,13 +129,13 @@ test.describe.skip(('Org label tests'), () => {
     test('/orgs/{org}/labels/{id} Update a label', async () => {
          
 
-        const response = await orgService.createLabel(users.testUser1.apiKey, 'OrgName', 'LabelName', '#00aabb')
+        const response = await orgService.createLabel(testUser1.apiKey, 'OrgName', 'LabelName', '#00aabb')
        
         
         const bodyPost = await response.json()        
         const id = bodyPost.id
         
-        const response1 = await orgService.updateLabel(users.testUser1.apiKey, 'OrgName', 'NewLabelName', id)
+        const response1 = await orgService.updateLabel(testUser1.apiKey, 'OrgName', 'NewLabelName', id)
         
             
         const bodyPatch = await response1.json()    

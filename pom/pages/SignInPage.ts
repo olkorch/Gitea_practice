@@ -1,5 +1,5 @@
 import { expect, Locator } from "@playwright/test";
-import BasePage from "./BasePage";
+import BasePage from "../BasePage";
 
 export default class SignInPage extends BasePage {
     private readonly userNameField: Locator = this.page.locator('//input[@id="user_name"]');

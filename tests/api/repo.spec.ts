@@ -1,11 +1,13 @@
 import { test, expect } from '@playwright/test'
-import { users } from '../../test-data/testUsers'
+import { getTestUsers } from '../../test-data/testUsers';
 import RepoService from '../../service-controller/repoService'
 
 
+const users = getTestUsers();
+const testUser1 = users.randomUser1; 
 
 //use without apiSetup
-test.describe(('Create repo endpoint tests'), () => {
+test.describe.skip(('Create repo endpoint tests'), () => {
 
     let repoService: RepoService
 
@@ -16,12 +18,12 @@ test.describe(('Create repo endpoint tests'), () => {
 
 test('user/repos Create a repository: 201 created', async () => {    
 
-    const response = await repoService.createRepo(users.testUser1.apiKey, 'newRepo')
+    const response = await repoService.createRepo(testUser1.apiKey, 'newRepo')
 
     console.log(await response.status())
     expect(response.status()).toBe(201)
        
-    await repoService.deleteRepo(users.testUser1.apiKey, 'newRepo', users.testUser1.userName)
+    await repoService.deleteRepo(testUser1.apiKey, 'newRepo', testUser1.userName)
 
     
 })
@@ -37,17 +39,17 @@ test('user/repos Create a repository: 401 unathorized', async () => {
 test('user/repos Create a repository: 409 name exists', async () => {
     await repoService.createRepo(users.testUser1.apiKey, 'repoName')
 
-    const response = await repoService.createRepo(users.testUser1.apiKey, 'repoName')
+    const response = await repoService.createRepo(testUser1.apiKey, 'repoName')
 
     console.log(await response.status())
     expect(response.status()).toBe(409)
 
-    await repoService.deleteRepo(users.testUser1.apiKey, 'repoName', users.testUser1.userName)
+    await repoService.deleteRepo(testUser1.apiKey, 'repoName', testUser1.userName)
 })
 
 
 test('user/repos Create a repository: 422 name is not specified', async () => {
-    const response = await repoService.createRepo(users.testUser1.apiKey, undefined)
+    const response = await repoService.createRepo(testUser1.apiKey, undefined)
 
     console.log(await response.status())
     expect(response.status()).toBe(422)
@@ -60,7 +62,7 @@ test('user/repos Create a repository: 422 name is not specified', async () => {
 
 
 //use with apiSetup
-test.describe.skip(('Repo wiki tests'), () => {
+test.describe(('Repo wiki tests'), () => {
 
     let repoService: RepoService
     
@@ -71,7 +73,7 @@ test.describe.skip(('Repo wiki tests'), () => {
 
     test.afterAll(async ({ request }) => {
         repoService = new RepoService(request)        
-        await repoService.deleteRepo(users.testUser1.apiKey, 'repoWithWiki', users.testUser1.userName)    
+        await repoService.deleteRepo(testUser1.apiKey, 'repoWithWiki', testUser1.userName)    
     })
 
     test.beforeEach(async ({ request }) => {
@@ -81,12 +83,12 @@ test.describe.skip(('Repo wiki tests'), () => {
 
     test.afterEach(async ({ request }) => {
         repoService = new RepoService(request)
-        await repoService.deleteWikiPage(users.testUser1.apiKey, 'repoWithWiki', users.testUser1.userName, 'WikiPage')
+        await repoService.deleteWikiPage(testUser1.apiKey, 'repoWithWiki', testUser1.userName, 'WikiPage')
     })
 
     test('/repos/{owner}/{repo}/wiki/new Create a wiki page', async () => {
 
-        const response = await repoService.createWikiPage(users.testUser1.apiKey, 'repoWithWiki', users.testUser1.userName, 'WikiPage')
+        const response = await repoService.createWikiPage(testUser1.apiKey, 'repoWithWiki', testUser1.userName, 'WikiPage')
     
         const body = await response.json()    
         console.log(await response.status())
@@ -99,9 +101,9 @@ test.describe.skip(('Repo wiki tests'), () => {
 
     test('/repos/{owner}/{repo}/wiki/page/{pageName} Get a wiki page', async () => {
         
-        await repoService.createWikiPage(users.testUser1.apiKey, 'repoWithWiki', users.testUser1.userName, 'WikiPage')
+        await repoService.createWikiPage(testUser1.apiKey, 'repoWithWiki', testUser1.userName, 'WikiPage')
 
-        const response = await repoService.getWikiPage(users.testUser1.apiKey, 'repoWithWiki', users.testUser1.userName, 'WikiPage')
+        const response = await repoService.getWikiPage(testUser1.apiKey, 'repoWithWiki', testUser1.userName, 'WikiPage')
     
         const body = await response.json()    
         console.log(await response.status())
@@ -116,9 +118,9 @@ test.describe.skip(('Repo wiki tests'), () => {
     
 test('/repos/{owner}/{repo}/wiki/page/{pageName} Edit a wiki page', async () => {
 
-        await repoService.createWikiPage(users.testUser1.apiKey, 'repoWithWiki', users.testUser1.userName, 'WikiPage')
+        await repoService.createWikiPage(testUser1.apiKey, 'repoWithWiki', testUser1.userName, 'WikiPage')
 
-        const response = await repoService.updateWikiPage(users.testUser1.apiKey, 'repoWithWiki', users.testUser1.userName, 'WikiPage', 'NewTitle')
+        const response = await repoService.updateWikiPage(testUser1.apiKey, 'repoWithWiki', testUser1.userName, 'WikiPage', 'NewTitle')
 
         const body = await response.json()    
         console.log(await response.status())

@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
-import SignInPage from '../../pom/SignInPage';
-import { users } from '../../test-data/testUsers';
+import SignInPage from '../../pom/pages/SignInPage';
+import { getTestUsers } from '../../test-data/testUsers';
 
 // test('has title', async ({ page }) => {
 //   await page.goto('https://playwright.dev/');
@@ -29,6 +29,12 @@ import { users } from '../../test-data/testUsers';
 // Redirection to Forgot Password
 // Redirection to Register
 
+// Get the current test user for UI tests via getTestUsers()
+// testUser1 contains all credentials, including apiKey, generated during setup
+const users = getTestUsers();
+const testUser1 = users.randomUser1; 
+
+
 
 test.describe(('Sign In tests'), () => {
 
@@ -40,23 +46,23 @@ test.describe(('Sign In tests'), () => {
     })
 
     test('Success Sign in with userName', async ({ page }) => {
-        await signInPage.signInWithCredentials(users.testUser1.userName, users.testUser1.password);
+        await signInPage.signInWithCredentials(testUser1.userName, testUser1.password);
         await page.pause();
-        await expect(page.locator('//span[@class="text truncated-item-container"]//span[@class="truncated-item-name"]')).toHaveText(users.testUser1.userName);
+        await expect(page.locator('//span[@class="text truncated-item-container"]//span[@class="truncated-item-name"]')).toHaveText(testUser1.userName);
     })
 
     test('Success Sign in with email', async ({ page }) => {
-        await signInPage.signInWithCredentials(users.testUser1.email, users.testUser1.password);
-        await expect(page.locator('//span[@class="text truncated-item-container"]//span[@class="truncated-item-name"]')).toHaveText(users.testUser1.userName);
+        await signInPage.signInWithCredentials(testUser1.email, testUser1.password);
+        await expect(page.locator('//span[@class="text truncated-item-container"]//span[@class="truncated-item-name"]')).toHaveText(testUser1.userName);
     })
 
     test('Success Sign in with empty email', async () => {
-        await signInPage.signInWithCredentials('', users.testUser1.password);
+        await signInPage.signInWithCredentials('', testUser1.password);
         await signInPage.verifyErrorMessageForFieldIsShown('userName')
     })
 
     test('Success Sign in with empty password', async () => {
-        await signInPage.signInWithCredentials(users.testUser1.email, '');
+        await signInPage.signInWithCredentials(testUser1.email, '');
         await signInPage.verifyErrorMessageForFieldIsShown('password')
     })
 

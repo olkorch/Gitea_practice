@@ -1,17 +1,20 @@
 import { test, expect } from '@playwright/test'
-import CreateProject from '../../pom/CreateProject'
-import SignInPage from '../../pom/SignInPage'
-import { users } from '../../test-data/testUsers'
-import Projects from '../../pom/Projects'
+import CreateProject from '../../pom/pages/CreateProject'
+import SignInPage from '../../pom/pages/SignInPage'
+import Projects from '../../pom/pages/Projects'
+import { getTestUsers } from '../../test-data/testUsers';
+
+const users = getTestUsers();
+const testUser1 = users.randomUser1; 
 
 
 
-test.describe.skip(('Create project tests'), () => {
+test.describe(('Create project tests'), () => {
 
     let signInPage: SignInPage
     let createProject: CreateProject
     let projects: Projects
-    test.use({ storageState: 'testUser1-state.json'})
+    test.use({ storageState: 'test-data/states/testUser1-state.json'})
         test.beforeEach(async ({ page }) => {
             signInPage = new SignInPage(page)
             createProject = new CreateProject(page)
@@ -79,7 +82,7 @@ test.describe.skip(('Create project tests'), () => {
     
     test('Cancel Project Creation', async ({ page }) => {
         await createProject.clickCancelButton()
-        await expect(page).toHaveURL(`/${users.testUser1.userName}/-/projects`)
+        await expect(page).toHaveURL(`/${testUser1.userName}/-/projects`)
     })
 
    

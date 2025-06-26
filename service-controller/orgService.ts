@@ -23,7 +23,7 @@ export default class OrgService {
     }
 
     async deleteOrg(token: string, org: string) {
-        return await this.request.delete(`http://localhost:3000/api/v1/orgs/${org}`, {
+        return await this.request.delete(`/api/v1/orgs/${org}`, {
             headers: {
                 'Authorization': `token ${token}`
             }
@@ -31,7 +31,7 @@ export default class OrgService {
     }
     
     async createLabel(token: string, org: string, name: string, color: string) {
-        return await this.request.post(`http://localhost:3000/api/v1/orgs/${org}/labels`, {
+        return await this.request.post(`/api/v1/orgs/${org}/labels`, {
             headers: {
                 'Authorization': `token ${token}`
             },
@@ -44,7 +44,7 @@ export default class OrgService {
     }
 
     async getLabel(token: string, org: string, id: number) {
-        return await this.request.get(`http://localhost:3000/api/v1/orgs/${org}/labels/${id}`, {
+        return await this.request.get(`/api/v1/orgs/${org}/labels/${id}`, {
             headers: {
                 'Authorization': `token ${token}`
             }
@@ -54,7 +54,7 @@ export default class OrgService {
     }
 
     async updateLabel(token: string, org: string, name: string, id: number) {
-        return await this.request.patch(`http://localhost:3000/api/v1/orgs/${org}/labels/${id}`, {
+        return await this.request.patch(`/api/v1/orgs/${org}/labels/${id}`, {
             headers: {
                 'Authorization': `token ${token}`
             },
@@ -67,7 +67,7 @@ export default class OrgService {
     }
 
     async deleteLabel(token: string, org: string, id: number) {
-        return await this.request.delete(`http://localhost:3000/api/v1/orgs/${org}/labels/${id}`, {
+        return await this.request.delete(`/api/v1/orgs/${org}/labels/${id}`, {
             headers: {
                 'Authorization': `token ${token}`
             }
