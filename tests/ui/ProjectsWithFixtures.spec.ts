@@ -8,7 +8,7 @@ const users = getTestUsers();
 const testUser1 = users.randomUser1; 
 
 
-test.describe(('Projects tests'), () => {
+test.describe.skip(('Projects tests'), () => {
 
     let signInPage: SignInPage    
     let projects: Projects

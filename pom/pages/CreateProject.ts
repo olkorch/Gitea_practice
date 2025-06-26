@@ -10,9 +10,9 @@ export default class CreateProject extends BasePage {
     private readonly titleField: Locator = this.page.locator('#_aria_auto_id_0')
     private readonly descriptionField: Locator = this.page.locator('#_combo_markdown_editor_1')
     private readonly templateDropdown: Locator = this.page.locator('div.ui.selection.dropdown:has-text("Select a project template to get started")') //PW selector :has-text()
-    private readonly templateNone: Locator = this.page.locator('#_aria_auto_id_13')
-    private readonly templateKanban: Locator = this.page.locator('#_aria_auto_id_14')
-    private readonly templateBugTriage: Locator = this.page.locator('#_aria_auto_id_15')
+    private readonly templateNone: Locator = this.page.locator('#_aria_auto_id_14')
+    private readonly templateKanban: Locator = this.page.locator('#_aria_auto_id_15')
+    private readonly templateBugTriage: Locator = this.page.locator('#_aria_auto_id_16')
     private readonly createButton: Locator = this.page.locator('button.ui.primary.button')
     private readonly cancelButton: Locator = this.page.locator('a.ui.cancel.button')
     

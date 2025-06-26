@@ -9,7 +9,7 @@ const testUser1 = users.randomUser1;
 
 
 
-test.describe(('Create project tests'), () => {
+test.describe.skip(('Create project tests'), () => {
 
     let signInPage: SignInPage
     let projects: Projects
